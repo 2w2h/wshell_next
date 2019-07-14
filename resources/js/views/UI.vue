@@ -27,12 +27,6 @@
         <template #main>
             <h3>Layout</h3>
             <p>Основной компонент, отвечающий за расположение блоков страницы и общие стили</p>
-            <highlight-code lang="javascript" :code="`
-                let b = 123;
-                <div>asd</div>
-                const = 345;
-            `">
-            </highlight-code>
 
             <h3>Nav</h3>
             <p>
@@ -41,6 +35,20 @@
             </p>
             <h3>Set</h3>
             <p>Отвечает за горизонтальное размещение дочерних компонентов</p>
+            <Set>
+                <template #1-3>col1-3</template>
+                <template #5>col5</template>
+                <template #6>col6</template>
+            </Set>
+
+            <h3>Source</h3>
+            <p>Отображение исходного кода</p>
+            <Source :code="`
+                let b = 123;
+                <div>asd</div>
+                const = 345;
+            `">
+            </Source>
         </template>
     </Layout>
 </template>
@@ -49,18 +57,11 @@
     import Layout from '../components/Layout'
     import Nav from "../components/Nav";
     import NavItem from "../components/NavItem";
-
-    import Vue from 'vue';
-    import VueHighlightJS from 'vue-highlight.js';
-    import 'vue-highlight.js/lib/allLanguages';
-    import 'highlight.js/styles/obsidian.css';
-    // import 'highlight.js/styles/agate.css';
-    // import 'highlight.js/styles/zenburn.css';
-    // import 'highlight.js/styles/darcula.css';
-    Vue.use(VueHighlightJS);
+    import Source from "../components/Source";
+    import Set from "../components/Set";
 
     export default {
-        components: {NavItem, Nav, Layout},
+        components: {NavItem, Nav, Layout, Source, Set},
         mounted() {},
     }
 </script>
