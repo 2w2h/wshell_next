@@ -49,13 +49,14 @@
         display: grid;
         grid-template:
                 "header header header header" 1fr
-                "aside main main main" 8fr
-                "footer footer footer footer" 1fr;
+                "aside main main main" 1fr
+                "footer footer footer footer" 1fr
+                / 210px 1fr;
     }
     .w_layout_center_without_aside {
         grid-template:
                 "header header header header" 1fr
-                "main main main main" 8fr
+                "main main main main" 1fr
                 "footer footer footer footer" 1fr;
     }
     header {

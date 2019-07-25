@@ -37,6 +37,9 @@
                 default: ''
             }
         },
+        created() {
+            console.log(this.code);
+        },
         computed: {
             compiledTemplate() {
                 return Vue.compile(this.code)
@@ -49,7 +52,7 @@
                 this.$options.staticRenderFns;
                 const output = render.call(this, this.$createElement);
                 this.$options.staticRenderFns = _staticRenderFns;
-                return output
+                return output;
             }
         }
     }

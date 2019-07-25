@@ -2,6 +2,7 @@
     <Layout>
         <template #header>
             <h3>Библиотека wShell UI</h3>
+            Vue Styleguidist
             <hr>
         </template>
         <template #aside>
@@ -84,12 +85,7 @@
             </p>
 
             <Preview :code="`
-                <Layout>
-                    <template #header>#header</template>
-                    <template #aside>#aside</template>
-                    <template #main>#main</template>
-                    <template #footer>#footer</template>
-                </Layout>
+                <h1>header</h1>
             `"></Preview>
         </template>
     </Layout>
