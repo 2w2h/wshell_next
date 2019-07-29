@@ -48,16 +48,16 @@
 
         display: grid;
         grid-template:
-                "header header header header" 1fr
+                "header header header header"
                 "aside main main main" 1fr
                 "footer footer footer footer" 1fr
                 / 210px 1fr;
     }
     .w_layout_center_without_aside {
         grid-template:
-                "header header header header" 1fr
+                "header header header header"
                 "main main main main" 1fr
-                "footer footer footer footer" 1fr;
+                "footer footer footer footer";
     }
     header {
         grid-area: header;
