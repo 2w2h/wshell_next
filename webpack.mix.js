@@ -9,6 +9,9 @@ mix.options({
     }
 });
 
+if (!process.argv.includes('--hot')) {
+    mix.version()
+}
 
 // mix
 //     .js('resources/js/main.js', 'public/dist')

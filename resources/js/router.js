@@ -11,6 +11,7 @@ export default new VueRouter({
         {path: '/grid', component: () => import('./views/GridTest')},
 
         {path: '/unit/dashboard', component: () => import('./views/unit/Dashboard')},
+        {path: '/experiments/stream', component: () => import('./views/experiments/Stream')},
 
         // { path: '/',         name: 'news',     component: News },
         // { path: '/nabla',    name: 'nabla',    component: Nabla },

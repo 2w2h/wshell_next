@@ -32,6 +32,11 @@ services:
     image: pilot114/base-nexus
     ports:
       - "8081:8081"
+  vkstream:
+    restart: always
+    image: pilot114/base-stream-vk
+    ports:
+      - "8888:8888"
   redis:
     restart: always
     image: redis:5.0.5
