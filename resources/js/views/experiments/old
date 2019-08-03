@@ -1,0 +1,66 @@
+                // TODO: spam filter
+                if (data.event.text.length > 1000) {
+                    console.log("Spam?");
+                    console.log(data.event.tags);
+                    console.log(data.event);
+                    return;
+                }
+
+                var message = "";
+                for (var i = 0; i < data.event.tags.length; i++) {
+                    message += '<span class="label label-default">' + data.event.tags[i] + '</span>';
+                }
+                // message += '<i>'+getTime(data.event.creation_time)+'</i>';
+                message += "<b><a target='_blank' href='" + data.event.event_url + "'>" + data.event.text + "</a></b></br>"
+                // attaches
+                if (data.event.attachments) {
+                    for (var i = 0; i < data.event.attachments.length; i++) {
+                        var attach = data.event.attachments[i];
+                        if (attach.type == "photo") {
+
+                            message += '<img src="' + attach.photo.photo_130 + '"></img>';
+
+                        } else if (attach.type == "audio") {
+
+                            message += '<br><i>AUDIO: ' + attach.audio.artist + ':' + attach.audio.title + '</i><br>';
+
+                        } else if (attach.type == "video") {
+
+                            message += '<i>VIDEO: ' + attach.video.title + '</i>';
+                            message += '<img src="' + attach.video.photo_130 + '"></img>';
+
+                        } else if (attach.type == "album") {
+
+                            message += '<i>ALBUM: ' + attach.album.title + ' (' + attach.album.size + ')</i>';
+                            message += '<img src="' + attach.album.thumb.photo_130 + '"></img>';
+
+                        } else if (attach.type == "poll") {
+
+                            message += '<br><b>' + attach.poll.question + '</b><ul>';
+                            for (var i = 0; i < attach.poll.answers.length; i++) {
+                                message += '<li>' + attach.poll.answers[i].text + '</li>';
+                            }
+                            message += '</ul>';
+
+                        } else if (attach.type == "link") {
+
+                            message += '<a src="' + attach.link.url + '">' + attach.link.title + '</a>';
+
+                        } else if (attach.type == "doc") {
+
+                            // docs
+                            if (attach.doc.ext == "gif") {
+                                message += '<img src="' + attach.doc.url + '"></img>';
+                            } else {
+                                console.log("OTHER DOC!");
+                                console.log(data.event);
+                            }
+
+                        } else {
+                            console.log("OTHER ATTACH!");
+                            console.log(data.event);
+                        }
+                    }
+                }
+                message += "<br>";
+                print(message, data.event.event_type);

@@ -5,35 +5,95 @@
             <hr>
         </template>
         <template #main>
-            <Set>
-                <SetItem>
-                    <h3>Лог</h3>
-                    <div v-for="event in logs">
-                        <b> тип события: {{ event.event_type }} </b>
-                        <p>tags: {{ event.tags }}</p>
-                        <i> id: {{ event.event_id }} </i>
-                        <a :href="event.event_url" target="_blank"> {{ event.event_url }} </a>
-                        <p> {{ event.text }} </p>
-                        <p>attachments: {{ event.attachments }} </p>
-                        <p>author: {{ event.author }}</p>
 
+            {{ rules }}
+
+            <Spoiler summary="Правила">
+                <p>
+                    Правило — это набор ключевых слов, наличие которых в тексте объекта означает, что объект попадёт в поток.
+                    Если слова указаны без двойных кавычек, поиск ведётся с упрощением (все словоформы, без учёта регистра).
+                    Для поиска по точному вхождению (с учётом регистра, словоформы и т.п.) каждое слово должно быть указано в двойных кавычках.
+                    Минус (-) перед ключевым словом исключит из выборки тексты, содержащие это слово. Правило не может состоять только из ключевых слов с минусом.
+                    Внутри правила в кавычках Вы можете использовать для поиска произвольные символы (#, $, % и так далее), кроме пробела и перевода каретки. В правилах без кавычек подобные символы игнорируются.
+                </p>
+
+                <p>
+                    Например, правилу кот будут соответствовать объекты с текстом "кот", "кОт", "Котик".
+                    Правилу "кот" из вышеперечисленных будет соответствовать только объект с текстом "кот".
+                    Правилу -"кот" будут соответствовать объекты, которые не содержат точную словоформу «кот».
+                    Правилу -собака будут соответствовать объекты, которые не содержат слово «собака» в любой форме.
+                    Чтобы искать записи с хэштегом, используйте правило вида "#хэштег".
+                </p>
+
+                <p>
+                    У каждого правила есть значение (value) — собственно содержание правила, и метка (tag). Вместе с каждым объектом Вы будете получать список его меток, чтобы понимать, какому правилу этот объект соответствует.
+                </p>
+
+                <b>Ограничения</b>
+                <ul>
+                    <li>максимальное количество правил — 300;</li>
+                    <li>максимальное количество ключевых слов в правиле — 100;</li>
+                    <li>максимальное размер правила в байтах — 4096;</li>
+                    <li>максимальное размер метки правила (tag) в байтах — 256;</li>
+                </ul>
+            </Spoiler>
+
+
+            <Set>
 <!--                        <p>action: {{ event.action }} </p>-->
 <!--                        <p>action_time: {{ event.action_time }} </p>-->
 <!--                        <p>creation_time: {{ event.creation_time }} </p>-->
 <!--                        <p>geo: {{ event.geo }} </p>-->
 <!--                        <p>shared: {{ event.shared_post_text }} - {{ event.shared_post_creation_time }}</p>-->
 <!--                        <p>signer_id: {{ event.signer_id }}</p>-->
+                <SetItem>
+                    <h3>Комментарии ({{ comments.length }})</h3>
+                    <div v-for="event in comments">
+                            <h4>{{ event.tags }}</h4>
+                            <i> id: {{ event.event_id }} </i>
+                            <a :href="event.event_url" target="_blank"> {{ event.event_url }} </a>
+                            <p> {{ event.text }} </p>
+                            <p>attachments: {{ event.attachments }} </p>
+                            <p>author: {{ event.author }}</p>
                         <hr>
                     </div>
                 </SetItem>
                 <SetItem>
-                    <h3>Комментарии</h3>
+                    <h3>Посты ({{ posts.length }})</h3>
+                    <div v-for="event in posts">
+                        <h4>{{ event.tags }}</h4>
+                        <i> id: {{ event.event_id }} </i>
+                        <a :href="event.event_url" target="_blank"> {{ event.event_url }} </a>
+                        <p> {{ event.text }} </p>
+                        <p>attachments: {{ event.attachments }} </p>
+                        <p>author: {{ event.author }}</p>
+                        <hr>
+                    </div>
                 </SetItem>
                 <SetItem>
-                    <h3>Посты</h3>
+                    <h3>Репосты ({{ shares.length }})</h3>
+                    <div v-for="event in shares">
+                        <h4>{{ event.tags }}</h4>
+                        <i> id: {{ event.event_id }} </i>
+                        <a :href="event.event_url" target="_blank"> {{ event.event_url }} </a>
+                        <p> {{ event.text }} </p>
+                        <p>attachments: {{ event.attachments }} </p>
+                        <p>author: {{ event.author }}</p>
+                        <hr>
+                    </div>
                 </SetItem>
                 <SetItem>
-                    <h3>Репосты</h3>
+                    <h3>Остальное ({{ others.length }})</h3>
+                    <div v-for="event in others">
+                        <b> тип события: {{ event.event_type }} </b>
+                        <h4>{{ event.tags }}</h4>
+                        <i> id: {{ event.event_id }} </i>
+                        <a :href="event.event_url" target="_blank"> {{ event.event_url }} </a>
+                        <p> {{ event.text }} </p>
+                        <p>attachments: {{ event.attachments }} </p>
+                        <p>author: {{ event.author }}</p>
+                        <hr>
+                    </div>
                 </SetItem>
             </Set>
         </template>
@@ -45,17 +105,20 @@
     import Nav from "../../components/Nav";
     import Set from "../../components/Set";
     import SetItem from "../../components/SetItem";
+    import Spoiler from "../../components/Spoiler";
+    import axios from "axios";
 
     export default {
-        components: {Nav, Layout, Set, SetItem},
+        components: {Nav, Layout, Set, SetItem, Spoiler},
         data() {
             return {
                 logs: [],
-                count: {
-                    comment: 0,
-                    post: 0,
-                    share: 0,
-                }
+                comments: [],
+                posts: [],
+                shares: [],
+                others: [],
+
+                rules: []
             }
         },
         created() {
@@ -74,77 +137,18 @@
             ws.onmessage = (evt) => {
                 let data = JSON.parse(evt.data);
 
-                // raw data
-                this.logs.push(data.event);
-                return;
-
-                // TODO: spam filter
-                if (data.event.text.length > 1000) {
-                    console.log("Spam?");
-                    console.log(data.event.tags);
-                    console.log(data.event);
-                    return;
+                if (data.event.event_type === 'post') {
+                    this.posts.push(data.event);
+                } else if (data.event.event_type === 'comment') {
+                    this.comments.push(data.event);
+                } else if (data.event.event_type === 'share') {
+                    this.shares.push(data.event);
+                } else {
+                    this.others.push(data.event);
                 }
-
-                var message = "";
-                for (var i = 0; i < data.event.tags.length; i++) {
-                    message += '<span class="label label-default">' + data.event.tags[i] + '</span>';
-                }
-                // message += '<i>'+getTime(data.event.creation_time)+'</i>';
-                message += "<b><a target='_blank' href='" + data.event.event_url + "'>" + data.event.text + "</a></b></br>"
-                // attaches
-                if (data.event.attachments) {
-                    for (var i = 0; i < data.event.attachments.length; i++) {
-                        var attach = data.event.attachments[i];
-                        if (attach.type == "photo") {
-
-                            message += '<img src="' + attach.photo.photo_130 + '"></img>';
-
-                        } else if (attach.type == "audio") {
-
-                            message += '<br><i>AUDIO: ' + attach.audio.artist + ':' + attach.audio.title + '</i><br>';
-
-                        } else if (attach.type == "video") {
-
-                            message += '<i>VIDEO: ' + attach.video.title + '</i>';
-                            message += '<img src="' + attach.video.photo_130 + '"></img>';
-
-                        } else if (attach.type == "album") {
-
-                            message += '<i>ALBUM: ' + attach.album.title + ' (' + attach.album.size + ')</i>';
-                            message += '<img src="' + attach.album.thumb.photo_130 + '"></img>';
-
-                        } else if (attach.type == "poll") {
-
-                            message += '<br><b>' + attach.poll.question + '</b><ul>';
-                            for (var i = 0; i < attach.poll.answers.length; i++) {
-                                message += '<li>' + attach.poll.answers[i].text + '</li>';
-                            }
-                            message += '</ul>';
-
-                        } else if (attach.type == "link") {
-
-                            message += '<a src="' + attach.link.url + '">' + attach.link.title + '</a>';
-
-                        } else if (attach.type == "doc") {
-
-                            // docs
-                            if (attach.doc.ext == "gif") {
-                                message += '<img src="' + attach.doc.url + '"></img>';
-                            } else {
-                                console.log("OTHER DOC!");
-                                console.log(data.event);
-                            }
-
-                        } else {
-                            console.log("OTHER ATTACH!");
-                            console.log(data.event);
-                        }
-                    }
-                }
-                message += "<br>";
-                print(message, data.event.event_type);
             };
+
+            this.getRules();
         },
         methods: {
             getTime(ts) {
@@ -153,6 +157,12 @@
                 let minutes = "0" + date.getMinutes();
                 let seconds = "0" + date.getSeconds();
                 return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+            },
+            getRules() {
+                axios.get('http://127.0.0.1:8889/rule')
+                    .then((response) => {
+                        this.rules = JSON.parse(response.data.result).rules;
+                    })
             }
         }
     }
