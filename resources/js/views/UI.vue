@@ -2,7 +2,7 @@
     <Layout>
         <template #header>
             <h3>Библиотека wShell UI</h3>
-            Vue Styleguidist
+            TODO: Vue Styleguidist
             <hr>
         </template>
         <template #aside>
@@ -22,10 +22,16 @@
                 }">
             </Nav>
             <h4>Остальное</h4>
-            <Nav :items="{'#Nav': 'Nav', '#Source': 'Source', '#Spoiler': 'Spoiler'}">
+            <Nav :items="{'#Nav': 'Nav', '#Source': 'Source', '#Spoiler': 'Spoiler', '#Badge': 'Badge'}">
             </Nav>
         </template>
         <template #main>
+            <h3>Badge</h3>
+            <p>Цветная метка</p>
+            <Spoiler summary="Пример">
+                <Badge>Текст</Badge>
+            </Spoiler>
+
             <h3>Layout</h3>
             <p>Основной компонент, отвечающий за расположение блоков страницы и общие стили</p>
             <Spoiler summary="Пример">
@@ -100,8 +106,9 @@
     import SetItem from "../components/SetItem";
     import Preview from "../components/doc/Preview";
     import Spoiler from "../components/Spoiler";
+    import Badge from "../components/Badge";
 
     export default {
-        components: {Spoiler, Preview, Nav, NavItem, Layout, Source, Set, SetItem},
+        components: {Spoiler, Preview, Nav, NavItem, Layout, Source, Set, SetItem, Badge},
     }
 </script>

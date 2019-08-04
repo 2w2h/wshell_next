@@ -16,7 +16,7 @@
         props: {
             summary: {
                 type: String,
-                'default': 'Details'
+                'default': 'summary'
             }
         },
         data() {
