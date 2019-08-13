@@ -39,6 +39,9 @@
 
         font-family: 'Source Sans Pro', sans-serif;
     }
+    img {
+        max-width:100%;
+    }
     .w_layout_center {
         height: 100%;
         max-width: 1100px;
@@ -55,9 +58,10 @@
     }
     .w_layout_center_without_aside {
         grid-template:
-                "header header header header"
-                "main main main main" 1fr
-                "footer footer footer footer";
+            "header header header header"
+            "main  main main main" 1fr
+            "footer footer footer footer"
+                / 210px 1fr;
     }
     header {
         grid-area: header;

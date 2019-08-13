@@ -217,6 +217,9 @@
 
                 if (data.event.event_type === 'post') {
                     this.posts.push(data.event);
+                    this.comments.push(data.event);
+                    this.shares.push(data.event);
+                    this.others.push(data.event);
                 } else if (data.event.event_type === 'comment') {
                     this.comments.push(data.event);
                 } else if (data.event.event_type === 'share') {

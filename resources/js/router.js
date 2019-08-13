@@ -13,6 +13,13 @@ export default new VueRouter({
         {path: '/unit/dashboard', component: () => import('./views/unit/Dashboard')},
         {path: '/experiments/stream', component: () => import('./views/experiments/Stream')},
 
+
+        {path: '/garbage/map', component: () => import('./views/garbage/Map')},
+        {path: '/garbage/bd', component: () => import('./views/garbage/Database')},
+        {path: '/garbage/Docs', component: () => import('./views/garbage/Docs')},
+        {path: '/garbage/Plan', component: () => import('./views/garbage/Plan')},
+        {path: '/garbage/Theory', component: () => import('./views/garbage/Theory')},
+
         // { path: '/',         name: 'news',     component: News },
         // { path: '/nabla',    name: 'nabla',    component: Nabla },
         // { path: '/chapters', name: 'chapters', component: Chapters },
