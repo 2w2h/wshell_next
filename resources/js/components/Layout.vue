@@ -39,7 +39,7 @@
 
         font-family: 'Source Sans Pro', sans-serif;
     }
-    img {
+    img,video {
         max-width:100%;
     }
     .w_layout_center {

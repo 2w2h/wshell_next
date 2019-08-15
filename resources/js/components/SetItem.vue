@@ -1,5 +1,5 @@
 <template>
-    <div :style="{flex: cols}">
+    <div :style="{flex: cols+' 0', width:(100/total)+'%', overflow: 'hidden'}">
         <slot></slot>
     </div>
 </template>
@@ -11,6 +11,10 @@
             cols: {
                 type: Number,
                 default: 1,
+            },
+            total: {
+                type: Number,
+                default: 12,
             }
         }
 
