@@ -18,5 +18,7 @@
 
     export default {
         components: {Nav, Layout, Set, SetItem},
+        created() {
+        }
     }
 </script>

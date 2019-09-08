@@ -11,14 +11,15 @@ export default new VueRouter({
         {path: '/grid', component: () => import('./views/GridTest')},
 
         {path: '/unit/dashboard', component: () => import('./views/unit/Dashboard')},
-        {path: '/experiments/stream', component: () => import('./views/experiments/Stream')},
+        {path: '/unit/images', component: () => import('./views/unit/Images')},
 
+        {path: '/experiments/stream', component: () => import('./views/experiments/Stream')},
 
         {path: '/garbage/map', component: () => import('./views/garbage/Map')},
         {path: '/garbage/bd', component: () => import('./views/garbage/Database')},
-        {path: '/garbage/Docs', component: () => import('./views/garbage/Docs')},
-        {path: '/garbage/Plan', component: () => import('./views/garbage/Plan')},
-        {path: '/garbage/Theory', component: () => import('./views/garbage/Theory')},
+        {path: '/garbage/docs', component: () => import('./views/garbage/Docs')},
+        {path: '/garbage/plan', component: () => import('./views/garbage/Plan')},
+        {path: '/garbage/theory', component: () => import('./views/garbage/Theory')},
 
         // { path: '/',         name: 'news',     component: News },
         // { path: '/nabla',    name: 'nabla',    component: Nabla },
