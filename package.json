@@ -28,7 +28,7 @@
     },
     "dependencies": {
         "2gis-maps": "^3.5.9",
-        "highlight.js": "^9.15.8",
+        "highlight.js": "^10.4.1",
         "jquery.terminal": "^2.6.3",
         "normalize.css": "^8.0.1",
         "vue-grid-layout": "^2.3.4",
